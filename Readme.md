@@ -72,7 +72,9 @@ $ localhost:3005/api/health
 ```
 
 [ ] Criar rota GET /users/:id
+
 [ ] Criar rota GET /users
+
 [ ] Criar rota PATCH /users/:id
 
 ```
@@ -87,7 +89,9 @@ $ localhost:3005/api/health
 ### Nathally Souza
 
 [ ] Criar integração com o Gemini
+
 [ ] Validar se o usuário existe
+
 [ ] Criar rota POST /review
 
 ```
