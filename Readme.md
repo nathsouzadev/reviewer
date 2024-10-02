@@ -60,7 +60,7 @@ $ localhost:3005/api/health
 
 ## Backlog
 
-### Anna Carolina
+### Anna Caroline
 
 [ ] Criar rota POST /users
 
