@@ -88,6 +88,8 @@ $ localhost:3005/api/health
 
 ### Nathally Souza
 
+[x] Criar github actions
+
 [ ] Criar integração com o Gemini
 
 [ ] Validar se o usuário existe
