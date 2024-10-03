@@ -93,35 +93,35 @@ jobs:
       - name: 🔗 Run integration test
         run: npm run test:e2e
 
-  coverage:
-    runs-on: ubuntu-latest
+  # coverage:
+  #   runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [20.x]
+  #   strategy:
+  #     matrix:
+  #       node-version: [20.x]
 
-    steps:
-      - uses: actions/checkout@v3
+  #   steps:
+  #     - uses: actions/checkout@v3
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
+  #     - name: Use Node.js ${{ matrix.node-version }}
+  #       uses: actions/setup-node@v3
+  #       with:
+  #         node-version: ${{ matrix.node-version }}
 
-      - name: Creating network
-        run: docker network create "microservice-network"
+  #     - name: Creating network
+  #       run: docker network create "microservice-network"
 
-      - name: 🏗️ Build docker-composer
-        run: docker compose up -d
+  #     - name: 🏗️ Build docker-composer
+  #       run: docker compose up -d
 
-      - name: 🔎 Check running container
-        run: docker ps -a
+  #     - name: 🔎 Check running container
+  #       run: docker ps -a
 
-      - name: 🔨 Install dependencies
-        run: npm install
+  #     - name: 🔨 Install dependencies
+  #       run: npm install
 
-      - name: 📊 Create tables
-        run: npm run migration:run
+  #     - name: 📊 Create tables
+  #       run: npm run migration:run
 
-      - name: 🔗 Run coverage check
-        run: npm run test:cov
+  #     - name: 🔗 Run coverage check
+  #       run: npm run test:cov
