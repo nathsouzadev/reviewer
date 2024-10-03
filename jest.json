@@ -22,7 +22,8 @@
       "main.ts",
       ".dto.ts",
       "./src/config/*",
-      ".mock.ts"
+      ".mock.ts",
+      ".entity.ts"
     ],
     "coverageDirectory": "../coverage",
     "coverageThreshold": {
