@@ -75,8 +75,20 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
+      - name: Creating network
+        run: docker network create "microservice-network"
+
+      - name: 🏗️ Build docker-composer
+        run: docker compose up -d
+
+      - name: 🔎 Check running container
+        run: docker ps -a
+
       - name: 🔨 Install dependencies
         run: npm install
+
+      - name: 📊 Create tables
+        run: npm run migration:run
 
       - name: 🔗 Run integration test
         run: npm run test:e2e
