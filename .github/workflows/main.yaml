@@ -16,6 +16,7 @@ env:
   DB_USERNAME: postgres
   DB_PASSWORD: p4ssw0rd-t3st3-db
   DB_NAME: postgres
+  GEMINI_API_KEY: gemini-api-key
 
 jobs:
   lint:
