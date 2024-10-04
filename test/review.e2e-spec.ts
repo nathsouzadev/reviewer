@@ -1,13 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { GeminiService } from './gemini.service';
-import { ConfigService } from '@nestjs/config';
+import { INestApplication } from '@nestjs/common';
+import * as request from 'supertest';
+import { AppModule } from '../src/app.module';
+import dataSource from '../src/config/db/dataSource';
 
 const mockGenerateContent = jest
   .fn()
   .mockImplementation(() => ({
     response: {
       candidates: [
-        { content: { parts: [{ text: '## Code Review Feedback for PR #5' }] } },
+        { content: { parts: [{ text: '## Code Review Feedback for PR #15' }] } },
       ],
     },
   }));
@@ -34,34 +36,36 @@ jest.mock('@google/generative-ai', () => ({
   })),
 }));
 
-describe('GeminiService', () => {
-  let service: GeminiService;
+describe('ReviewController (e2e)', () => {
+  let app: INestApplication;
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [
-        GeminiService,
-        {
-          provide: ConfigService,
-          useValue: {
-            get: jest
-              .fn()
-              .mockReturnValueOnce('AIzaSyDs_7e74bX2mkZ8HwUibRswwP0kmMLeEDw'),
-          },
-        },
-      ],
+    const moduleFixture: TestingModule = await Test.createTestingModule({
+      imports: [AppModule],
     }).compile();
 
-    service = module.get<GeminiService>(GeminiService);
+    app = moduleFixture.createNestApplication();
+    await app.init();
+    await dataSource.initialize();
   });
 
-  it('should be return gemini response', async () => {
-    const mockUrl = 'https://github.com/nathsouzadev/reviewer/pull/5';
+  afterEach(async () => {
+    await dataSource.destroy();
+    await app.close();
+  });
 
-    const response = await service.review(mockUrl);
-    expect(mockGenerateContent).toHaveBeenCalledWith(mockUrl);
-    expect(response).toMatchObject({
-      review: '## Code Review Feedback for PR #5',
-    });
+  it('should return code review', async () => {
+    return request(app.getHttpServer())
+      .post('/api/review')
+      .send({
+        email: 'ada@reprograma.com.br',
+        url: 'https://github.com/ada/repo/pull/15'
+      })
+      .expect(201)
+      .then(async (response) => {
+        expect(response.body).toMatchObject({
+          review: '## Code Review Feedback for PR #15',
+        });
+      });
   });
 });

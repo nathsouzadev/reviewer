@@ -1,5 +1,6 @@
 import { HealthModule } from '../health/health.module';
 import { UsersModule } from '../resources/domain/users/users.module';
+import { RevivewModule } from '../resources/domain/revivew/revivew.module';
 
 export const router = [
   {
@@ -13,6 +14,10 @@ export const router = [
         path: 'users',
         module: UsersModule
       },
+      {
+        path: 'review',
+        module: RevivewModule
+      }
     ],
   },
 ];
