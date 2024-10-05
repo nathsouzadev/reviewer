@@ -62,7 +62,7 @@ $ localhost:3005/api/health
 
 ### Anna Caroline
 
-[ ] Criar rota POST /users
+[x] Criar rota POST /users
 
 ```
 {
