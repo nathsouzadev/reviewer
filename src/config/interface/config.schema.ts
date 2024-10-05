@@ -7,4 +7,5 @@ export const validationSchema = Joi.object({
   DB_USERNAME: Joi.string().required(),
   DB_NAME: Joi.string().required(),
   DB_PASSWORD: Joi.string().required(),
+  GEMINI_API_KEY: Joi.string().required(),
 });
