@@ -35,7 +35,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: 🔨 Install dependencies
-        run: npm install
+        run: npm install --legacy-peer-deps
 
       - name: 💅🏾 Run lint
         run: npm run lint
@@ -56,7 +56,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: 🔨 Install dependencies
-        run: npm install
+        run: npm install --legacy-peer-deps
 
       - name: 🧪 Run unit test
         run: npm run test
@@ -86,7 +86,7 @@ jobs:
         run: docker ps -a
 
       - name: 🔨 Install dependencies
-        run: npm install
+        run: npm install --legacy-peer-deps
 
       - name: 📊 Create tables
         run: npm run migration:run
@@ -119,7 +119,7 @@ jobs:
         run: docker ps -a
 
       - name: 🔨 Install dependencies
-        run: npm install
+        run: npm install --legacy-peer-deps
 
       - name: 📊 Create tables
         run: npm run migration:run

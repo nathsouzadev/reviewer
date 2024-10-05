@@ -17,7 +17,7 @@ $ npm run local:setup
 2 - Run the scripts
 
 ```bash
-$ npm install
+$ npm install --legacy-peer-deps
 ```
 
 ## Running the app
