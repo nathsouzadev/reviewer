@@ -60,7 +60,7 @@ $ localhost:3005/api/health
 
 ## Backlog
 
-### Anna Carolina
+### Anna Caroline
 
 [ ] Criar rota POST /users
 
@@ -72,7 +72,9 @@ $ localhost:3005/api/health
 ```
 
 [ ] Criar rota GET /users/:id
+
 [ ] Criar rota GET /users
+
 [ ] Criar rota PATCH /users/:id
 
 ```
@@ -86,9 +88,13 @@ $ localhost:3005/api/health
 
 ### Nathally Souza
 
-[ ] Criar integração com o Gemini
+[x] Criar github actions
+
+[x] Criar integração com o Gemini
+
+[x] Criar rota POST /review
+
 [ ] Validar se o usuário existe
-[ ] Criar rota POST /review
 
 ```
 {
