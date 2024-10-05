@@ -18,6 +18,7 @@ describe('ormUserRepository', () => {
           provide: USER_REPOSITORY_TOKEN,
           useValue: {
             save: jest.fn(),
+            find: jest.fn(),
           },
         },
       ],
@@ -32,5 +33,10 @@ describe('ormUserRepository', () => {
 
     await ormUserRepository.create(mockUser);
     expect(mockRepository.save).toBeCalledWith(mockUser);
+  });
+
+  it('should return users list', async () => {
+    await ormUserRepository.get();
+    expect(mockRepository.find).toHaveBeenCalled();
   });
 });
