@@ -1,9 +1,8 @@
 import { Controller, Get, Logger } from '@nestjs/common';
-import {
-  HealthCheck,
-} from '@nestjs/terminus';
-import { ApiOkResponse } from '@nestjs/swagger';
+import { HealthCheck } from '@nestjs/terminus';
+import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('health')
 @Controller()
 export class HealthController {
   private readonly logger = new Logger(HealthController.name);
@@ -14,6 +13,6 @@ export class HealthController {
   async health() {
     return {
       social: { status: 'up' },
-    }
+    };
   }
 }
