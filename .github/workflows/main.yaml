@@ -124,5 +124,5 @@ jobs:
       - name: 📊 Create tables
         run: npm run migration:run
 
-      - name: 🔗 Run coverage check
+      - name: 📈 Run coverage check
         run: npm run test:cov
