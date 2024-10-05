@@ -11,4 +11,8 @@ export class UsersService {
     const newUser = new User(createUserDto.name, createUserDto.email);
     return this.userRepository.create(newUser);
   }
+
+  async get(): Promise<User[]> {
+    return this.userRepository.get();
+  }
 }

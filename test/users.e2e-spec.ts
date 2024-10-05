@@ -3,6 +3,7 @@ import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
 import dataSource from '../src/config/db/dataSource';
+import { randomUUID } from 'crypto';
 
 describe('UsersController (e2e)', () => {
   let app: INestApplication;
@@ -46,6 +47,43 @@ describe('UsersController (e2e)', () => {
             id: response.body.id,
             email: 'ada@reprograma.com.br',
             name: 'Ada Lovelace',
+          },
+        ]);
+      });
+  });
+
+  it('should list all users', async () => {
+    const mockUsers = [
+      {
+        id: randomUUID(),
+        email: 'ada@reprograma.com.br',
+        name: 'Ada Lovelace',
+      },
+      {
+        id: randomUUID(),
+        email: 'gracehooper@reprograma.com.br',
+        name: 'Grace Hooper',
+      },
+    ];
+    for (const user of mockUsers) {
+      await dataSource.query(
+        `insert into users (id, email, name) values ('${user.id}','${user.email}', '${user.name}')`,
+      );
+    }
+    return request(app.getHttpServer())
+      .get('/api/users')
+      .expect(200)
+      .then(async (response) => {
+        expect(response.body).toMatchObject([
+          {
+            id: expect.any(String),
+            email: 'ada@reprograma.com.br',
+            name: 'Ada Lovelace',
+          },
+          {
+            id: expect.any(String),
+            email: 'gracehooper@reprograma.com.br',
+            name: 'Grace Hooper',
           },
         ]);
       });

@@ -10,5 +10,6 @@ export class ORMUserRepository implements UserRepository {
     @InjectRepository(User) private usersRepository: Repository<User>,
   ) {}
 
-  create = async (user: User) => this.usersRepository.save(user);
+  create = async (user: User): Promise<User> => this.usersRepository.save(user);
+  get = async (): Promise<User[]> => this.usersRepository.find();
 }
