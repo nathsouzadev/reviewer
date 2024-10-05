@@ -90,11 +90,11 @@ $ localhost:3005/api/health
 
 [x] Criar github actions
 
-[ ] Criar integração com o Gemini
+[x] Criar integração com o Gemini
+
+[x] Criar rota POST /review
 
 [ ] Validar se o usuário existe
-
-[ ] Criar rota POST /review
 
 ```
 {

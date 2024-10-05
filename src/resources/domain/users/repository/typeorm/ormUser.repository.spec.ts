@@ -28,16 +28,12 @@ describe('ormUserRepository', () => {
   });
 
   it('should be create user', async () => {
-    // const mockPeople = new People({
-    //   name: 'Ada Lovelace',
-    //   email: 'ada@idiomaparatodos.com.br',
-    //   city: 'Londres',
-    //   phoneNumber: '+5511123456789',
-    //   cpf: '12345678900',
-    //   birthdate: '1815-12-10',
-    // });
+    const mockUser = new User({
+      email: 'ada@reprograma.com.br',
+      name: 'Ada Lovelace',
+    });
 
-    // await ormPeopleRepository.create(mockPeople);
-    // expect(mockRepository.save).toBeCalledWith(mockPeople);
+    await ormUserRepository.create(mockUser);
+    expect(mockRepository.save).toBeCalledWith(mockUser);
   });
 });
