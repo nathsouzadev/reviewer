@@ -5,18 +5,13 @@ import { HttpExceptionFilter } from './config/http-exception';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.enableCors({
-    origin: [
-      ''
-    ],
-    methods: 'POST, GET'
-  });
+  app.enableCors();
 
   const document = SwaggerModule.createDocument(
     app,
     new DocumentBuilder()
-      .setTitle('Whats4Social API Documentation')
-      .setDescription('Service to integrate Whatsapp with Social Media Platforms')
+      .setTitle('Reviewer API Documentation')
+      .setDescription('Service to get code review from Gemini')
       .setVersion('1.0')
       .build(),
   );
