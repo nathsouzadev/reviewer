@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { User } from '../../entities/user.entity';
+import { User } from '../../../../../config/db/entities/users.entity';
 import { Repository } from 'typeorm';
 import { ORMUserRepository } from './ormUser.repository';
 
@@ -28,10 +28,7 @@ describe('ormUserRepository', () => {
   });
 
   it('should be create user', async () => {
-    const mockUser = new User({
-      email: 'ada@reprograma.com.br',
-      name: 'Ada Lovelace',
-    });
+    const mockUser = new User('Ada Lovelace', 'ada@reprograma.com.br');
 
     await ormUserRepository.create(mockUser);
     expect(mockRepository.save).toBeCalledWith(mockUser);
