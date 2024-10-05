@@ -10,7 +10,7 @@ on:
 
 env:
   ## Sets environment variable
-  PORT: 5000
+  PORT: 3005
   DB_HOST: localhost
   DB_PORT: 5010
   DB_USERNAME: postgres
@@ -124,5 +124,5 @@ jobs:
       - name: 📊 Create tables
         run: npm run migration:run
 
-      - name: 🔗 Run coverage check
+      - name: 📈 Run coverage check
         run: npm run test:cov

@@ -1,7 +1,7 @@
 import { IConfig } from './interface/config.interface';
 
 export default (): IConfig => ({
-  port: parseInt(process.env.PORT, 10 || 3000),
+  port: parseInt(process.env.PORT) || 3000,
   db: {
     host: process.env.DB_HOST,
     port: parseInt(process.env.DB_PORT, 10),
@@ -10,6 +10,6 @@ export default (): IConfig => ({
     database: process.env.DB_NAME,
   },
   gemini: {
-    apiKey: process.env.GEMINI_API_KEY
-  }
+    apiKey: process.env.GEMINI_API_KEY,
+  },
 });
