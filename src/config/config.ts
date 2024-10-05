@@ -9,4 +9,7 @@ export default (): IConfig => ({
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
   },
+  gemini: {
+    apiKey: process.env.GEMINI_API_KEY
+  }
 });
