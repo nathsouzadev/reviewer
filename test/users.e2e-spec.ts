@@ -50,4 +50,39 @@ describe('UsersController (e2e)', () => {
         ]);
       });
   });
+
+  it('should list all users', async () => {
+    const mockUsers = [
+      {
+        email: 'ada@reprograma.com.br',
+        name: 'Ada Lovelace',
+      },
+      {
+        email: 'gracehooper@reprograma.com.br',
+        name: 'Grace Hooper',
+      },
+    ];
+    for (const user of mockUsers) {
+      await dataSource.query(
+        `insert into users (email, name) values ('${user.email}', '${user.name}')`,
+      );
+    }
+    return request(app.getHttpServer())
+      .get('/api/users')
+      .expect(200)
+      .then(async (response) => {
+        expect(response.body).toMatchObject([
+          {
+            id: expect.any(String),
+            email: 'ada@reprograma.com.br',
+            name: 'Ada Lovelace',
+          },
+          {
+            id: expect.any(String),
+            email: 'gracehooper@reprograma.com.br',
+            name: 'Grace Hooper',
+          },
+        ]);
+      });
+  });
 });
