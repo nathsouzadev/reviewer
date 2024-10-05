@@ -1,8 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UsersService } from './users.service';
 import { UserRepository } from '../repository/users.repository';
-import { CreateUserDto } from '../dto/create-user.dto';
-import { User } from '../entities/user.entity';
 import { randomUUID } from 'crypto';
 
 describe('UsersService', () => {
