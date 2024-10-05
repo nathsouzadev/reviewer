@@ -3,6 +3,7 @@ import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
 import dataSource from '../src/config/db/dataSource';
+import { randomUUID } from 'crypto';
 
 describe('UsersController (e2e)', () => {
   let app: INestApplication;
@@ -54,17 +55,19 @@ describe('UsersController (e2e)', () => {
   it('should list all users', async () => {
     const mockUsers = [
       {
+        id: randomUUID(),
         email: 'ada@reprograma.com.br',
         name: 'Ada Lovelace',
       },
       {
+        id: randomUUID(),
         email: 'gracehooper@reprograma.com.br',
         name: 'Grace Hooper',
       },
     ];
     for (const user of mockUsers) {
       await dataSource.query(
-        `insert into users (email, name) values ('${user.email}', '${user.name}')`,
+        `insert into users (id, email, name) values ('${user.id}','${user.email}', '${user.name}')`,
       );
     }
     return request(app.getHttpServer())
