@@ -90,9 +90,10 @@ describe('UsersController (e2e)', () => {
   });
 
   it('should list one users', async () => {
+    const mockUserId = randomUUID();
     const mockUsers = [
       {
-        id: randomUUID(),
+        id: mockUserId,
         email: 'ada@reprograma.com.br',
         name: 'Ada Lovelace',
       },
@@ -108,16 +109,14 @@ describe('UsersController (e2e)', () => {
       );
     }
     return request(app.getHttpServer())
-      .get('/api/users/id')
+      .get(`/api/users/${mockUserId}`)
       .expect(200)
       .then(async (response) => {
-        expect(response.body[0]).toMatchObject([
-          {
-            id: expect.any(String),
-            email: 'ada@reprograma.com.br',
-            name: 'Ada Lovelace',
-          },
-        ]);
+        expect(response.body).toMatchObject({
+          id: mockUserId,
+          email: 'ada@reprograma.com.br',
+          name: 'Ada Lovelace',
+        });
       });
   });
 });

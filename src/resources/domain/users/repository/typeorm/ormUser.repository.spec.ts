@@ -3,6 +3,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { User } from '../../../../../config/db/entities/users.entity';
 import { Repository } from 'typeorm';
 import { ORMUserRepository } from './ormUser.repository';
+import { randomUUID } from 'crypto';
 
 describe('ormUserRepository', () => {
   let ormUserRepository: ORMUserRepository;
@@ -42,14 +43,10 @@ describe('ormUserRepository', () => {
   });
 
   it('should return one user', async () => {
-    const mockUser: User = {
-      id: '123',
-      email: 'ada@reprograma.com.br',
-      name: 'Ada Lovelace',
-    };
-    await ormUserRepository.getById(mockUser.id);
+    const mockUserId = randomUUID();
+    await ormUserRepository.getById(mockUserId);
     expect(mockRepository.findOne).toHaveBeenCalledWith({
-      where: { id: mockUser.id },
+      where: { id: mockUserId },
     });
   });
 });
