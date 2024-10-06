@@ -21,4 +21,5 @@ export class ORMUserRepository implements UserRepository {
       { id },
       { name: userUpdated.name, email: userUpdated.email },
     );
+  delete = async (id: string) => this.usersRepository.delete(id);
 }
