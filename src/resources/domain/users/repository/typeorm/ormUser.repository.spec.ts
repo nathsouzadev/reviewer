@@ -19,6 +19,7 @@ describe('ormUserRepository', () => {
           useValue: {
             save: jest.fn(),
             find: jest.fn(),
+            findOne: jest.fn(),
           },
         },
       ],
@@ -38,5 +39,17 @@ describe('ormUserRepository', () => {
   it('should return users list', async () => {
     await ormUserRepository.get();
     expect(mockRepository.find).toHaveBeenCalled();
+  });
+
+  it('should return one user', async () => {
+    const mockUser: User = {
+      id: '123',
+      email: 'ada@reprograma.com.br',
+      name: 'Ada Lovelace',
+    };
+    await ormUserRepository.getById(mockUser.id);
+    expect(mockRepository.findOne).toHaveBeenCalledWith({
+      where: { id: mockUser.id },
+    });
   });
 });

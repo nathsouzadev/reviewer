@@ -16,6 +16,7 @@ describe('UsersService', () => {
           useValue: {
             create: jest.fn(),
             get: jest.fn(),
+            getById: jest.fn(),
           },
         },
       ],
@@ -70,5 +71,28 @@ describe('UsersService', () => {
     const response = await service.get();
     expect(mockUserRepository.get).toHaveBeenCalled();
     expect(response).toMatchObject(mockUsers);
+  });
+
+  it('should return one user', async () => {
+    const mockUsers = [
+      {
+        id: randomUUID(),
+        email: 'ada@reprograma.com.br',
+        name: 'Ada Lovelace',
+      },
+      {
+        id: randomUUID(),
+        email: 'gracehooper@reprograma.com.br',
+        name: 'Grace Hooper',
+      },
+    ];
+
+    jest
+      .spyOn(mockUserRepository, 'getById')
+      .mockImplementationOnce(() => Promise.resolve(mockUsers[0]));
+
+    const response = await service.getById(mockUsers[0].id);
+    expect(mockUserRepository.getById).toHaveBeenCalledWith(mockUsers[0].id);
+    expect(response).toMatchObject(mockUsers[0]);
   });
 });
