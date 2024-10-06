@@ -12,4 +12,5 @@ export class ORMUserRepository implements UserRepository {
 
   create = async (user: User): Promise<User> => this.usersRepository.save(user);
   get = async (): Promise<User[]> => this.usersRepository.find();
+  getById = async (id: string): Promise<User> => this.usersRepository.findOne({ where: { id } });
 }

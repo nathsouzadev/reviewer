@@ -3,6 +3,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { User } from '../../../../../config/db/entities/users.entity';
 import { Repository } from 'typeorm';
 import { ORMUserRepository } from './ormUser.repository';
+import { randomUUID } from 'crypto';
 
 describe('ormUserRepository', () => {
   let ormUserRepository: ORMUserRepository;
@@ -19,6 +20,7 @@ describe('ormUserRepository', () => {
           useValue: {
             save: jest.fn(),
             find: jest.fn(),
+            findOne: jest.fn(),
           },
         },
       ],
@@ -38,5 +40,13 @@ describe('ormUserRepository', () => {
   it('should return users list', async () => {
     await ormUserRepository.get();
     expect(mockRepository.find).toHaveBeenCalled();
+  });
+
+  it('should return one user', async () => {
+    const mockUserId = randomUUID();
+    await ormUserRepository.getById(mockUserId);
+    expect(mockRepository.findOne).toHaveBeenCalledWith({
+      where: { id: mockUserId },
+    });
   });
 });

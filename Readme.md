@@ -73,7 +73,7 @@ $ localhost:3005/api/health
 
 [ ] Criar rota GET /users/:id
 
-[ ] Criar rota GET /users
+[x] Criar rota GET /users
 
 [ ] Criar rota PATCH /users/:id
 
