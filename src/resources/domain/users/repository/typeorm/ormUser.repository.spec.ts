@@ -21,6 +21,7 @@ describe('ormUserRepository', () => {
             save: jest.fn(),
             find: jest.fn(),
             findOne: jest.fn(),
+            update: jest.fn(),
           },
         },
       ],
@@ -48,5 +49,18 @@ describe('ormUserRepository', () => {
     expect(mockRepository.findOne).toHaveBeenCalledWith({
       where: { id: mockUserId },
     });
+  });
+
+  it('should update an user', async () => {
+    const mockUserId = randomUUID();
+    const mockUserData = {
+      name: 'Grace Hooper',
+      email: 'gracehooper@reprograma.com',
+    };
+    await ormUserRepository.update(mockUserId, mockUserData);
+    expect(mockRepository.update).toHaveBeenCalledWith(
+      { id: mockUserId },
+      { name: mockUserData.name, email: mockUserData.email },
+    );
   });
 });

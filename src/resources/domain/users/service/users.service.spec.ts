@@ -17,6 +17,7 @@ describe('UsersService', () => {
             create: jest.fn(),
             get: jest.fn(),
             getById: jest.fn(),
+            update: jest.fn(),
           },
         },
       ],
@@ -74,12 +75,11 @@ describe('UsersService', () => {
   });
 
   it('should return one user', async () => {
-    const mockUser = 
-      {
-        id: randomUUID(),
-        email: 'ada@reprograma.com.br',
-        name: 'Ada Lovelace',
-      };
+    const mockUser = {
+      id: randomUUID(),
+      email: 'ada@reprograma.com.br',
+      name: 'Ada Lovelace',
+    };
 
     jest
       .spyOn(mockUserRepository, 'getById')
@@ -88,5 +88,20 @@ describe('UsersService', () => {
     const response = await service.getById(mockUser.id);
     expect(mockUserRepository.getById).toHaveBeenCalledWith(mockUser.id);
     expect(response).toMatchObject(mockUser);
+  });
+
+  it('should return an updated user', async () => {
+    const mockUserId = randomUUID();
+    const mockUserData = {
+      name: 'Grace Hooper',
+      email: 'gracehooper@reprograma.com',
+    };
+    jest.spyOn(mockUserRepository, 'update');
+
+    await service.update(mockUserId, mockUserData);
+    expect(mockUserRepository.update).toHaveBeenCalledWith(
+      mockUserId,
+      mockUserData,
+    );
   });
 });
