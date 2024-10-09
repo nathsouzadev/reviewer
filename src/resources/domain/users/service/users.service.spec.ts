@@ -18,6 +18,7 @@ describe('UsersService', () => {
             get: jest.fn(),
             getById: jest.fn(),
             update: jest.fn(),
+            delete: jest.fn(),
           },
         },
       ],
@@ -103,5 +104,12 @@ describe('UsersService', () => {
       mockUserId,
       mockUserData,
     );
+  });
+
+  it('should delete an user', async () => {
+    const mockUserId = randomUUID();
+    jest.spyOn(mockUserRepository, 'delete');
+    await service.delete(mockUserId);
+    expect(mockUserRepository.delete).toHaveBeenCalledWith(mockUserId);
   });
 });

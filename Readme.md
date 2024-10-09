@@ -71,11 +71,11 @@ $ localhost:3005/api/health
 }
 ```
 
-[ ] Criar rota GET /users/:id
+[x] Criar rota GET /users/:id
 
 [x] Criar rota GET /users
 
-[ ] Criar rota PATCH /users/:id
+[x] Criar rota PATCH /users/:id
 
 ```
 {
@@ -84,7 +84,7 @@ $ localhost:3005/api/health
 }
 ```
 
-[ ] Criar rota DELETE /users/:id
+[x] Criar rota DELETE /users/:id
 
 ### Nathally Souza
 
