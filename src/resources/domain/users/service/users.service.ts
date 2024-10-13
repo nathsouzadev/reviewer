@@ -23,7 +23,12 @@ export class UsersService {
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {
-    return this.userRepository.update(id, updateUserDto);
+    await this.userRepository.update(id, updateUserDto);
+    return {
+      id,
+      email: updateUserDto.email,
+      name: updateUserDto.name
+    };
   }
 
   async delete(id: string) {

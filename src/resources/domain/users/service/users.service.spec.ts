@@ -99,11 +99,16 @@ describe('UsersService', () => {
     };
     jest.spyOn(mockUserRepository, 'update');
 
-    await service.update(mockUserId, mockUserData);
+    const response = await service.update(mockUserId, mockUserData);
     expect(mockUserRepository.update).toHaveBeenCalledWith(
       mockUserId,
       mockUserData,
     );
+    expect(response).toMatchObject({
+      id: mockUserId,
+      email: mockUserData.email,
+      name: mockUserData.name
+    })
   });
 
   it('should delete an user', async () => {
