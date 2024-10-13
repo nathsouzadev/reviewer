@@ -22,6 +22,7 @@ describe('ormUserRepository', () => {
             find: jest.fn(),
             findOne: jest.fn(),
             update: jest.fn(),
+            delete: jest.fn(),
           },
         },
       ],
@@ -63,4 +64,10 @@ describe('ormUserRepository', () => {
       { name: mockUserData.name, email: mockUserData.email },
     );
   });
+
+  it('should delete an user', async () => {
+    const mockUserId = randomUUID();
+    await ormUserRepository.delete(mockUserId);
+    expect(mockRepository.delete).toHaveBeenCalledWith(mockUserId);
+  })
 });

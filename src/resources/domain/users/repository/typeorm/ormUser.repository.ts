@@ -3,7 +3,6 @@ import { UserRepository } from '../users.repository';
 import { User } from '../../../../../config/db/entities/users.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { randomUUID } from 'crypto';
 import { UpdateUserDto } from '../../dto/update-user.dto';
 
 @Injectable()
@@ -21,4 +20,5 @@ export class ORMUserRepository implements UserRepository {
       { id },
       { name: userUpdated.name, email: userUpdated.email },
     );
+  delete = async (id: string) => this.usersRepository.delete(id);
 }

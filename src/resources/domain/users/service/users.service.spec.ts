@@ -18,6 +18,7 @@ describe('UsersService', () => {
             get: jest.fn(),
             getById: jest.fn(),
             update: jest.fn(),
+            delete: jest.fn(),
           },
         },
       ],
@@ -98,10 +99,27 @@ describe('UsersService', () => {
     };
     jest.spyOn(mockUserRepository, 'update');
 
-    await service.update(mockUserId, mockUserData);
+    const response = await service.update(mockUserId, mockUserData);
     expect(mockUserRepository.update).toHaveBeenCalledWith(
       mockUserId,
       mockUserData,
     );
+    expect(response).toMatchObject({
+      id: mockUserId,
+      email: mockUserData.email,
+      name: mockUserData.name
+    })
+  });
+
+  it('should delete an user', async () => {
+    const mockUserId = randomUUID();
+    jest.spyOn(mockUserRepository, 'delete');
+    const response = await service.delete(mockUserId);
+
+    expect(mockUserRepository.delete).toHaveBeenCalledWith(mockUserId);
+    expect(response).toMatchObject({
+      id: mockUserId,
+      message: 'User deleted',
+    });
   });
 });

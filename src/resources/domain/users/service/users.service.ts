@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UserRepository } from '../repository/users.repository';
 import { User } from '../../../../config/db/entities/users.entity';
-import { randomUUID } from 'crypto';
 import { UpdateUserDto } from '../dto/update-user.dto';
 
 @Injectable()
@@ -23,6 +22,19 @@ export class UsersService {
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {
-    return this.userRepository.update(id, updateUserDto);
+    await this.userRepository.update(id, updateUserDto);
+    return {
+      id,
+      email: updateUserDto.email,
+      name: updateUserDto.name
+    };
+  }
+
+  async delete(id: string) {
+    await this.userRepository.delete(id);
+    return {
+      id,
+      message: 'User deleted'
+    };
   }
 }
