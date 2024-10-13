@@ -133,7 +133,7 @@ describe('UsersController (e2e)', () => {
       .patch(`/api/users/${mockUserId}`)
       .send({
         name: 'Ada Lovelace',
-        email: 'ada.lovelace@reprograma.com',
+        email: 'ada.lovelace@reprograma.com.br',
       })
       .expect(200)
       .then(async (response) => {
@@ -151,10 +151,6 @@ describe('UsersController (e2e)', () => {
 
     return request(app.getHttpServer())
       .delete(`/api/users/${mockUserId}`)
-      .send({
-        name: 'Ada Lovelace',
-        email: 'ada.lovelace@reprograma.com',
-      })
       .expect(200)
       .then(async (response) => {
         expect(response.body).toMatchObject({
