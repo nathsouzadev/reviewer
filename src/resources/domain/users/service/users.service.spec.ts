@@ -109,7 +109,12 @@ describe('UsersService', () => {
   it('should delete an user', async () => {
     const mockUserId = randomUUID();
     jest.spyOn(mockUserRepository, 'delete');
-    await service.delete(mockUserId);
+    const response = await service.delete(mockUserId);
+
     expect(mockUserRepository.delete).toHaveBeenCalledWith(mockUserId);
+    expect(response).toMatchObject({
+      id: mockUserId,
+      message: 'User deleted',
+    });
   });
 });
