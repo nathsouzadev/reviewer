@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UserRepository } from '../repository/users.repository';
 import { User } from '../../../../config/db/entities/users.entity';
@@ -9,8 +13,13 @@ export class UsersService {
   constructor(private readonly userRepository: UserRepository) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
-    const newUser = new User(createUserDto.name, createUserDto.email);
-    return this.userRepository.create(newUser);
+    try {
+      const newUser = new User(createUserDto.name, createUserDto.email);
+      const user = this.userRepository.create(newUser);
+      return user;
+    } catch (error) {
+      throw new InternalServerErrorException('Internal server error');
+    }
   }
 
   async get(): Promise<User[]> {
@@ -26,7 +35,7 @@ export class UsersService {
     return {
       id,
       email: updateUserDto.email,
-      name: updateUserDto.name
+      name: updateUserDto.name,
     };
   }
 
@@ -34,7 +43,7 @@ export class UsersService {
     await this.userRepository.delete(id);
     return {
       id,
-      message: 'User deleted'
+      message: 'User deleted',
     };
   }
 }
