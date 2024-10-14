@@ -1,7 +1,7 @@
 import {
-  ConflictException,
   Injectable,
   InternalServerErrorException,
+  NotFoundException,
 } from '@nestjs/common';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UserRepository } from '../repository/users.repository';
@@ -23,11 +23,22 @@ export class UsersService {
   }
 
   async get(): Promise<User[]> {
-    return this.userRepository.get();
+    const users = await this.userRepository.get();
+
+    if (users.length === 0) {
+      throw new NotFoundException('Users not found');
+    }
+
+    return users;
   }
 
   async getById(id: string): Promise<User> {
-    return this.userRepository.getById(id);
+    const user = await this.userRepository.getById(id);
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    return user;
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {

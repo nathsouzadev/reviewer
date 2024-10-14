@@ -104,6 +104,18 @@ describe('UsersController (e2e)', () => {
       });
   });
 
+  it('should return 404 when list all users with empty table', async () => {
+    return request(app.getHttpServer())
+      .get('/api/users')
+      .expect(404)
+      .then(async (response) => {
+        expect(response.body).toMatchObject({
+          statusCode: 404,
+          message: 'Users not found',
+        });
+      });
+  });
+
   it('should list one users', async () => {
     const mockUserId = randomUUID();
     await generateMockUsers(mockUserId);
@@ -116,6 +128,18 @@ describe('UsersController (e2e)', () => {
           id: mockUserId,
           email: 'ada@reprograma.com.br',
           name: 'Ada Lovelace',
+        });
+      });
+  });
+
+  it('should return 404 when list one user with invalid id', async () => {
+    return request(app.getHttpServer())
+      .get(`/api/users/${randomUUID()}`)
+      .expect(404)
+      .then(async (response) => {
+        expect(response.body).toMatchObject({
+          statusCode: 404,
+          message: 'User not found',
         });
       });
   });
