@@ -25,4 +25,7 @@ export class ORMUserRepository implements UserRepository {
     );
 
   delete = async (id: string) => this.usersRepository.delete(id);
+
+  getByEmail = async (email: string): Promise<User> =>
+    this.usersRepository.findOne({ where: { email } });
 }

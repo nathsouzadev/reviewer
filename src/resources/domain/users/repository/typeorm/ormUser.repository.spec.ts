@@ -69,5 +69,14 @@ describe('ormUserRepository', () => {
     const mockUserId = randomUUID();
     await ormUserRepository.delete(mockUserId);
     expect(mockRepository.delete).toHaveBeenCalledWith(mockUserId);
-  })
+  });
+
+  it('should return user by email', async () => {
+    const mockUserEmail = 'ada@reprograma.com';
+
+    await ormUserRepository.getByEmail(mockUserEmail);
+    expect(mockRepository.findOne).toHaveBeenCalledWith({
+      where: { email: mockUserEmail },
+    });
+  });
 });
