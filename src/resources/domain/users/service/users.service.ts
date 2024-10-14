@@ -57,4 +57,13 @@ export class UsersService {
       message: 'User deleted',
     };
   }
+
+  async getByEmail(email: string): Promise<User> {
+    const user = await this.userRepository.getByEmail(email);
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    return user;
+  }
 }
