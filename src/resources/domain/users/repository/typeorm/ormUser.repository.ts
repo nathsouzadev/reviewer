@@ -12,13 +12,17 @@ export class ORMUserRepository implements UserRepository {
   ) {}
 
   create = async (user: User): Promise<User> => this.usersRepository.save(user);
+
   get = async (): Promise<User[]> => this.usersRepository.find();
+
   getById = async (id: string): Promise<User> =>
     this.usersRepository.findOne({ where: { id } });
+
   update = async (id: string, userUpdated: UpdateUserDto) =>
     this.usersRepository.update(
       { id },
       { name: userUpdated.name, email: userUpdated.email },
     );
+
   delete = async (id: string) => this.usersRepository.delete(id);
 }
