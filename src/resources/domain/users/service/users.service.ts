@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UserRepository } from '../repository/users.repository';
 import { User } from '../../../../config/db/entities/users.entity';
@@ -9,16 +13,32 @@ export class UsersService {
   constructor(private readonly userRepository: UserRepository) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
-    const newUser = new User(createUserDto.name, createUserDto.email);
-    return this.userRepository.create(newUser);
+    try {
+      const newUser = new User(createUserDto.name, createUserDto.email);
+      const user = this.userRepository.create(newUser);
+      return user;
+    } catch (error) {
+      throw new InternalServerErrorException('Internal server error');
+    }
   }
 
   async get(): Promise<User[]> {
-    return this.userRepository.get();
+    const users = await this.userRepository.get();
+
+    if (users.length === 0) {
+      throw new NotFoundException('Users not found');
+    }
+
+    return users;
   }
 
   async getById(id: string): Promise<User> {
-    return this.userRepository.getById(id);
+    const user = await this.userRepository.getById(id);
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    return user;
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {
@@ -26,7 +46,7 @@ export class UsersService {
     return {
       id,
       email: updateUserDto.email,
-      name: updateUserDto.name
+      name: updateUserDto.name,
     };
   }
 
@@ -34,7 +54,16 @@ export class UsersService {
     await this.userRepository.delete(id);
     return {
       id,
-      message: 'User deleted'
+      message: 'User deleted',
     };
+  }
+
+  async getByEmail(email: string): Promise<User> {
+    const user = await this.userRepository.getByEmail(email);
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    return user;
   }
 }

@@ -27,9 +27,9 @@ export class GeminiService {
         role: 'model',
         parts: [
           {
-            text: ` 1 - You are a code reviewer and review a code with javascript
-                    2 - Give me a feedback about the PR in link. This feedback should be in md format.
-                    3 - Give me sugestions to improve the code. This sugestions should be in md format.`,
+            text: ` 1 - Você é um code reviewer e deve revisar um PR.
+                    2 - Dê um feedback sobre o PR no link. Este feedback deve estar no formato md.
+                    3 - Dê sugestões para melhorar o código. Estas sugestões devem estar no formato md.`,
           },
         ],
       },

@@ -94,7 +94,7 @@ $ localhost:3005/api/health
 
 [x] Criar rota POST /review
 
-[ ] Validar se o usuário existe
+[x] Validar se o usuário existe
 
 ```
 {

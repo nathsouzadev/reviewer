@@ -19,6 +19,7 @@ describe('UsersService', () => {
             getById: jest.fn(),
             update: jest.fn(),
             delete: jest.fn(),
+            getByEmail: jest.fn(),
           },
         },
       ],
@@ -107,8 +108,8 @@ describe('UsersService', () => {
     expect(response).toMatchObject({
       id: mockUserId,
       email: mockUserData.email,
-      name: mockUserData.name
-    })
+      name: mockUserData.name,
+    });
   });
 
   it('should delete an user', async () => {
@@ -121,5 +122,31 @@ describe('UsersService', () => {
       id: mockUserId,
       message: 'User deleted',
     });
+  });
+
+  it('should return user by email', async () => {
+    const mockEmail = 'gracehooper@reprograma.com';
+    const mockUserData = {
+      id: randomUUID(),
+      name: 'Grace Hooper',
+      email: mockEmail,
+    };
+
+    jest
+      .spyOn(mockUserRepository, 'getByEmail')
+      .mockImplementation(() => Promise.resolve(mockUserData));
+
+    const response = await service.getByEmail(mockEmail);
+    expect(mockUserRepository.getByEmail).toHaveBeenCalledWith(mockEmail);
+    expect(response).toMatchObject(mockUserData);
+  });
+
+  it('should throw error when user not found', async () => {
+    const mockEmail = 'gracehooper@reprograma.com';
+    jest.spyOn(mockUserRepository, 'getByEmail').mockImplementation(() => null);
+
+    await expect(service.getByEmail(mockEmail)).rejects.toThrowError(
+      'User not found',
+    );
   });
 });

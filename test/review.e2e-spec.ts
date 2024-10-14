@@ -3,16 +3,16 @@ import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
 import dataSource from '../src/config/db/dataSource';
+import { generateMockUsers } from './helpers/generator';
+import { randomUUID } from 'crypto';
 
-const mockGenerateContent = jest
-  .fn()
-  .mockImplementation(() => ({
-    response: {
-      candidates: [
-        { content: { parts: [{ text: '## Code Review Feedback for PR #15' }] } },
-      ],
-    },
-  }));
+const mockGenerateContent = jest.fn().mockImplementation(() => ({
+  response: {
+    candidates: [
+      { content: { parts: [{ text: '## Code Review Feedback for PR #15' }] } },
+    ],
+  },
+}));
 
 jest.mock('@google/generative-ai', () => ({
   GoogleGenerativeAI: jest.fn().mockImplementation(() => ({
@@ -50,21 +50,39 @@ describe('ReviewController (e2e)', () => {
   });
 
   afterEach(async () => {
+    await dataSource.query('DELETE FROM users');
     await dataSource.destroy();
     await app.close();
   });
 
   it('should return code review', async () => {
+    await generateMockUsers(randomUUID());
+
     return request(app.getHttpServer())
       .post('/api/review')
       .send({
         email: 'ada@reprograma.com.br',
-        url: 'https://github.com/ada/repo/pull/15'
+        url: 'https://github.com/ada/repo/pull/15',
       })
       .expect(201)
       .then(async (response) => {
         expect(response.body).toMatchObject({
           review: '## Code Review Feedback for PR #15',
+        });
+      });
+  });
+
+  it('should return error if user not exists', async () => {
+    return request(app.getHttpServer())
+      .post('/api/review')
+      .send({
+        email: 'ada@reprograma.com.br',
+        url: 'https://github.com/ada/repo/pull/15',
+      })
+      .expect(404)
+      .then(async (response) => {
+        expect(response.body).toMatchObject({
+          message: 'User not found',
         });
       });
   });
