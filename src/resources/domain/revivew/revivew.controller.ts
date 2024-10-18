@@ -1,7 +1,11 @@
 import { Controller, Post, Body, ValidationPipe } from '@nestjs/common';
 import { RevivewService } from './service/revivew.service';
 import { RevivewDto } from './dto/revivew.dto';
-import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiCreatedResponse,
+  ApiNotFoundResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 
 @ApiTags('review')
 @Controller()
@@ -18,6 +22,12 @@ export class RevivewController {
       example: {
         review: 'Code review from Gemini',
       },
+    },
+  })
+  @ApiNotFoundResponse({
+    description: 'No records found',
+    example: {
+      message: 'Users not found!',
     },
   })
   @Post()
